@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <input class="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md" type="Password" name="name" placeholder="*********" />
         </div>
         <div class="mt-8 flex justify-center text-lg text-black">
-          <button class="login" type="submit" class="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600">Login</button>
+          <button class="login"  data-click-gtag-action='click_phone' data-click-trace-params="{phone: 17746679676}" type="submit" class="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600">Login</button>
         </div>
       </form>
     </div>
@@ -47,5 +47,43 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WN4FMZ5J" height="0" width="0" style="display:none;visibility:hidden"></iframe>
   </noscript>
 <!-- End Google Tag Manager (noscript) -->
+  <script>
+    // 获取点击追踪的元素
+      function getClickTraceElement(target) {
+        let ele = target
+        let clickTraceAction = ele.getAttribute('click-gtag-action')
+        while (ele.tagName !== 'BODY' && !clickTraceAction) {
+          ele = ele.parentNode
+          clickTraceAction = ele.getAttribute('click-gtag-action')
+        }
+        return ele.tagName !== 'BODY' ? ele : null
+      }
+
+      document.body.addEventListener(
+      'click',
+      (event) => {
+        // 此方法用于找到触发事件的元素
+        let ele = getClickTraceElement(event.target)
+        // 如果点击的元素有绑定该属性，则返回元素，否则返回null
+        if (ele) {
+          // 自定义事件名称，可以自行修改判断
+          let traceAction = ele.getAttribute('click-gtag-action')
+          let traceParams = ele.getAttribute('click-gtag-params') || {}
+  
+          // 由于绑定的数据通过 JSON.stringfy() 处理成字符串，这里需要转化一下，具体看传递的参数值
+          if (typeof traceParams === 'string') {
+            traceParams = JSON.parse(traceParams)
+          }
+  
+          let params = {
+            event: traceAction,
+            ecommerce: traceParams
+          }
+          window.dataLayer.push(params)
+        }
+      },
+      false
+    )
+  </script>
 </body>
 </html>
