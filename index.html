@@ -382,6 +382,61 @@
   </div>
 </div>
   <script>
+    /**
+ * 生成假电话号码（支持手机号和固定电话）
+ * @param {Object} options 配置项
+ * @param {number} [options.count=1] 生成数量
+ * @param {boolean} [options.mobile=true] 是否生成手机号（默认true）
+ * @param {boolean} [options.landline=false] 是否生成固定电话（默认false）
+ * @returns {string[]} 生成的电话号码数组
+ */
+function generateFakePhones(options = {}) {
+  const { count = 1, mobile = true, landline = false } = options;
+  const phones = [];
+
+  // 手机号有效号段（覆盖常见号段）
+  const mobilePrefixes = [
+    '130','131','132','133','134','135','136','137','138','139', // 13x
+    '147', // 14x（仅147）
+    '150','151','152','153','155','156','157','158','159', // 15x（排除14x）
+    '166', // 16x（仅166）
+    '170','171','172','173','174','175','176','177','178', // 17x（排除179）
+    '180','181','182','183','184','185','186','187','188','189', // 18x
+    '198','199' // 19x（仅198、199）
+  ];
+
+  // 生成手机号
+  if (mobile) {
+    for (let i = 0; i < count; i++) {
+      const prefix = mobilePrefixes[Math.floor(Math.random() * mobilePrefixes.length)];
+      const suffix = Math.random().toString().slice(2, 10); // 生成8位随机数（0-9）
+      phones.push(`${prefix}${suffix}`);
+    }
+  }
+
+  // 生成固定电话（区号+本地号）
+  if (landline) {
+    // 区号规则：3位（如010）或4位（如0755），以0开头
+    const areaCodeLength = Math.random() < 0.5 ? 3 : 4;
+    const areaCode = '0' + Array.from({ length: areaCodeLength - 1 }, () => Math.floor(Math.random() * 10)).join('');
+    
+    // 本地号码：7位（对应3位区号）或8位（对应4位区号）
+    const localNumberLength = areaCodeLength === 3 ? 7 : 8;
+    const localNumber = Array.from({ length: localNumberLength }, () => Math.floor(Math.random() * 10)).join('');
+    
+    phones.push(`${areaCode}${localNumber}`);
+  }
+
+  return phones;
+}
+    window.onload = fuction () {
+      window.dataLayer.push({
+         event: 'event_user_info',
+         userId: Math.random().toString(36).substr(2, 15),
+         userName: Math.random().toString(36).substr(2, 15) + 'ljm',
+         userPhone: generateFakePhones({ count: 1 })[0]
+      })
+    }
     // 获取点击追踪的元素
       function getClickTraceElement(target) {
         let ele = target
@@ -398,6 +453,7 @@
       (event) => {
         // 此方法用于找到触发事件的元素
         let ele = getClickTraceElement(event.target)
+        console.log(ele, 'element=====>')
         // 如果点击的元素有绑定该属性，则返回元素，否则返回null
         if (ele) {
           // 自定义事件名称，可以自行修改判断
