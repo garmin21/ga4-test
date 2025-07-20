@@ -429,14 +429,14 @@ function generateFakePhones(options = {}) {
 
   return phones;
 }
-    window.onload = fuction () {
-      window.dataLayer.push({
-         event: 'event_user_info',
-         userId: Math.random().toString(36).substr(2, 15),
-         userName: Math.random().toString(36).substr(2, 15) + 'ljm',
-         userPhone: generateFakePhones({ count: 1 })[0]
-      })
-    }
+
+    window.dataLayer.push({
+       event: 'event_user_info',
+       userId: Math.random().toString(36).substr(2, 15),
+       userName: Math.random().toString(36).substr(2, 15) + 'ljm',
+       userPhone: generateFakePhones({ count: 1 })[0]
+    })
+    
     // 获取点击追踪的元素
       function getClickTraceElement(target) {
         let ele = target
