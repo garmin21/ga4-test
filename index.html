@@ -119,8 +119,7 @@
                   </svg>
                   <p class="">14 Components</p>
                 </div>
-                <a href="https://uat-paas.transsion.com/mkt-campaign-h5-web/home?activityCode=P202507210002" target="_blank" class="flex-no-shrink bg-green-400 hover:bg-green-500 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-green-300 hover:border-green-500 text-white rounded-full transition ease-in duration-300">去 新品预定uat</a>
-                <a href="https://test-paas.transsion.com/mkt-campaign-h5-web/home?activityCode=P202507210002" target="_blank" class="flex-no-shrink bg-green-400 hover:bg-green-500 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-green-300 hover:border-green-500 text-white rounded-full transition ease-in duration-300">去，新品预定 test</a>
+                <a href="https://test-paas.transsion.com/mkt-campaign-h5-web/home?activityCode=P202507210002" target="_blank" class="flex-no-shrink bg-green-400 hover:bg-green-500 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-green-300 hover:border-green-500 text-white rounded-full transition ease-in duration-300">FLLOME</a>
               </div>
             </div>
           </div>
@@ -434,7 +433,7 @@ function generateFakePhones(options = {}) {
     window.dataLayer.push({
        event: 'event_user_info',
        userId: Math.random().toString(36).substr(2, 15),
-       userName: Math.random().toString(36).substr(2, 15) + 'ljm',
+       userName: 'ljm-' + Math.random().toString(36).substr(2, 15),
        userPhone: generateFakePhones({ count: 1 })[0]
     })
     
